@@ -41,7 +41,7 @@ class ArticleContent {
     String slug = json['slug'];
     String title = json['title'];
     DateTime date =
-        DateTime.fromMillisecondsSinceEpoch(json['pubDate']).toLocal();
+        DateTime.fromMillisecondsSinceEpoch(json['pubDate'] * 1000).toLocal();
     List<Author> authors =
         json['authors'].map((Map a) => Author.fromJson(a)).toList();
     Tag tag = Tag.fromJson(json['mainSuperTag']);
@@ -54,7 +54,7 @@ class ArticleContent {
     String boxLead = json['boxLead'];
     String boxTitle = json['boxTitle'];
     DateTime updated =
-        DateTime.fromMillisecondsSinceEpoch(json['updatedAt']).toLocal();
+        DateTime.fromMillisecondsSinceEpoch(json['updatedAt'] * 1000).toLocal();
 
     return ArticleContent(
       id,

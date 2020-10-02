@@ -1,4 +1,4 @@
-package hu.telex.news.telex
+package hu.telex.news
 
 import io.flutter.embedding.android.FlutterActivity
 

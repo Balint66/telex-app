@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:timeago/timeago.dart' as timeago;
 import 'package:telex/data/models/box_item.dart';
 
 class ArticleTile extends StatelessWidget {
@@ -7,7 +8,6 @@ class ArticleTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(article.image);
     return Padding(
       padding: EdgeInsets.all(12.0),
       child: InkWell(
@@ -21,7 +21,17 @@ class ArticleTile extends StatelessWidget {
             child: Column(
               children: [
                 (article.image ?? "") != ""
-                    ? Image.network("https://telex.hu" + article.image)
+                    ? Image.network(
+                        "https://telex.hu" + article.image,
+                        loadingBuilder: (context, widget, event) {
+                          return event == null
+                              ? widget
+                              : Padding(
+                                  padding: EdgeInsets.all(12.0),
+                                  child: LinearProgressIndicator(),
+                                );
+                        },
+                      )
                     : Container(),
                 ListTile(
                   title: Row(
@@ -30,6 +40,7 @@ class ArticleTile extends StatelessWidget {
                     ],
                   ),
                 ),
+                Text(timeago.format(article.date)),
               ],
             ),
           ),

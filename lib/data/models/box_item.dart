@@ -27,12 +27,14 @@ class BoxItem {
     String slug = json['slug'];
     String title = json['title'];
     String lead = json['lead'];
-    String image = json["imgSrc"];
+    String image = json["imageSrc"];
     DateTime date =
-        DateTime.fromMillisecondsSinceEpoch(json['pubDate']).toLocal();
+        DateTime.fromMillisecondsSinceEpoch(json['pubDate'] * 1000).toLocal();
     Tag tag = Tag.fromJson(json['mainSuperTag']);
     List<Author> authors = [];
     json['authors'].forEach((a) => authors.add(Author.fromJson(a)));
+    print(date);
+    print(json['pubDate']);
 
     return BoxItem(
       id,
