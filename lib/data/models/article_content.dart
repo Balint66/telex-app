@@ -42,12 +42,13 @@ class ArticleContent {
     String title = json['title'];
     DateTime date =
         DateTime.fromMillisecondsSinceEpoch(json['pubDate'] * 1000).toLocal();
-    List<Author> authors =
-        json['authors'].map((Map a) => Author.fromJson(a)).toList();
+    List<Author> authors = [];
+    json['authors'].forEach((a) => authors.add(Author.fromJson(a)));
     Tag tag = Tag.fromJson(json['mainSuperTag']);
     String lead = json['lead'];
     String content = json['content'];
-    List<Tag> tags = json['tags'].map((Map t) => Tag.fromJson(t)).toList();
+    List<Tag> tags = [];
+    json['tags'].forEach((t) => tags.add(Tag.fromJson(t)));
     String heroImage = json['heroImage'];
     String image = json['imageSrc'];
     String boxImage = json['boxImage'];

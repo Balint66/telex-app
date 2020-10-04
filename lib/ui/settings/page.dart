@@ -1,5 +1,5 @@
+import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:telex/ui/theme/theme_provider.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({Key key}) : super(key: key);
@@ -17,7 +17,7 @@ class SettingsPage extends StatelessWidget {
               ),
               centerTitle: true,
               title: Text(
-                "Settings",
+                "Beállítások",
                 style: TextStyle(
                   color: Theme.of(context).textTheme.headline5.color,
                 ),
@@ -25,11 +25,11 @@ class SettingsPage extends StatelessWidget {
               backgroundColor: Colors.transparent,
               shadowColor: Colors.transparent,
             ),
-            CheckboxListTile(
-              value: ThemeProvider.of(context).mode == ThemeMode.dark,
-              onChanged: (value) => ThemeProvider.updateBrightness(
-                  context, value ? ThemeMode.dark : ThemeMode.light),
-              title: Text('Dark theme'),
+            SwitchListTile(
+              value: Theme.of(context).brightness == Brightness.dark,
+              onChanged: (value) => DynamicTheme.of(context)
+                  .setBrightness(value ? Brightness.dark : Brightness.light),
+              title: Text('Sötét téma'),
             )
           ],
         ),

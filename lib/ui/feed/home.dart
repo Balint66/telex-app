@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:telex/ui/feed/builder.dart';
 import 'package:telex/ui/settings/page.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomeFeed extends StatefulWidget {
   HomeFeed({Key key}) : super(key: key);
@@ -22,11 +23,27 @@ class _HomeFeedState extends State<HomeFeed> {
       future: widget.feedBuilder.build(),
       builder: (BuildContext context, data) => Scaffold(
         body: NestedScrollView(
+          physics:
+              BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
           headerSliverBuilder:
-              (BuildContext context, bool innerBoxIsScrolled) => [
+              (BuildContext context, _) => [
             SliverAppBar(
-              leading: IconButton(
-                  icon: Icon(FeatherIcons.dollarSign), onPressed: () {}),
+              floating: true,
+              pinned: false,
+              snap: false,
+              leading: Padding(
+                padding: EdgeInsets.all(10.0),
+                child: FlatButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(6.0),
+                    ),
+                    color: Colors.yellow,
+                    padding: EdgeInsets.zero,
+                    child: Center(
+                        child:
+                            Icon(FeatherIcons.dollarSign, color: Colors.black)),
+                    onPressed: () => launch("https://tamogatas.telex.hu/")),
+              ),
               centerTitle: true,
               title: Container(
                 alignment: Alignment.center,
@@ -46,14 +63,14 @@ class _HomeFeedState extends State<HomeFeed> {
           body: RefreshIndicator(
             key: _refreshKey,
             onRefresh: () async {
-              //magic
+              await widget.feedBuilder.build();
+              setState(() {});
             },
 
             // Message Tiles
             child: CupertinoScrollbar(
               child: ListView(
-                physics: BouncingScrollPhysics(
-                    parent: AlwaysScrollableScrollPhysics()),
+                physics: NeverScrollableScrollPhysics(),
                 padding: EdgeInsets.only(top: 12.0),
                 children: data.hasData
                     ? widget.feedBuilder.tiles

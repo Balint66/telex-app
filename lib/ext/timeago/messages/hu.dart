@@ -1,4 +1,4 @@
-import 'package:timeago/src/messages/lookupmessages.dart';
+import 'package:timeago/src/messages/lookupmessages.dart'; // ignore: implementation_imports
 
 class HuMessages implements LookupMessages {
   @override
