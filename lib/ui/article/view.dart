@@ -21,11 +21,32 @@ class ArticleView extends StatelessWidget {
       future: api.getArticleContent(article),
       builder: (context, AsyncSnapshot<ArticleContent> data) {
         List<Widget> tags = [];
+        List<Widget> authors = [];
+        List<Widget> recommended = [];
 
         if (data.hasData) {
           data.data.tags.forEach((tag) {
             tags.add(ArticleTag(
               text: tag.name,
+            ));
+          });
+
+          data.data.authors.forEach((author) {
+            authors.add(ListTile(
+              leading: ClipOval(
+                  child: Image.network("https://telex.hu" + author.avatar)),
+              title: Text(author.name),
+            ));
+          });
+
+          data.data.recommended.forEach((r) {
+            recommended.add(ListTile(
+              title: Text(r.title),
+              subtitle: Text(r.tag.name),
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute(
+                    builder: (context) => ArticleView(article: r.slug)),
+              ),
             ));
           });
         }
@@ -157,10 +178,52 @@ class ArticleView extends StatelessWidget {
                               onLinkTap: (url) => launch(url),
                             ),
                           ),
+
+                          // Authors
+                          data.data.authors.length > 0
+                              ? Padding(
+                                  padding: EdgeInsets.only(
+                                    left: 14.0,
+                                    right: 14.0,
+                                    top: 16.0,
+                                  ),
+                                  child: Text(
+                                    "Szerkesztők",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 24.0,
+                                    ),
+                                  ),
+                                )
+                              : Container(),
+                          Column(children: authors),
+
+                          // Recommended
+                          data.data.recommended.length > 0
+                              ? Padding(
+                                  padding: EdgeInsets.only(
+                                    left: 14.0,
+                                    right: 14.0,
+                                    top: 16.0,
+                                    bottom: 4.0,
+                                  ),
+                                  child: Text(
+                                    "Ajánló",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 24.0,
+                                    ),
+                                  ),
+                                )
+                              : Container(),
+                          Column(children: recommended),
                         ],
                       ),
                     )
-                  : Center(child: CircularProgressIndicator()),
+                  : SizedBox(
+                      height: MediaQuery.of(context).size.height,
+                      child: Center(child: CircularProgressIndicator()),
+                    ),
             ),
           ),
         );

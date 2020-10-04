@@ -32,7 +32,7 @@ class _HomeFeedState extends State<HomeFeed> {
                 padding: EdgeInsets.all(10.0),
                 child: FlatButton(
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(6.0),
+                      borderRadius: BorderRadius.circular(8.0),
                     ),
                     color: Colors.yellow,
                     padding: EdgeInsets.zero,
@@ -65,11 +65,17 @@ class _HomeFeedState extends State<HomeFeed> {
             },
             child: CupertinoScrollbar(
               child: ListView(
-                physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+                physics: BouncingScrollPhysics(
+                    parent: AlwaysScrollableScrollPhysics()),
                 padding: EdgeInsets.only(top: 12.0),
                 children: data.hasData
                     ? widget.feedBuilder.tiles
-                    : [Center(child: CircularProgressIndicator())],
+                    : [
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height,
+                          child: Center(child: CircularProgressIndicator()),
+                        )
+                      ],
               ),
             ),
           ),

@@ -1,5 +1,6 @@
 import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:telex/data/context/app.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({Key key}) : super(key: key);
@@ -8,8 +9,7 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        child: ListView(
-          physics: BouncingScrollPhysics(),
+        child: Column(
           children: [
             AppBar(
               leading: BackButton(
@@ -30,6 +30,14 @@ class SettingsPage extends StatelessWidget {
               onChanged: (value) => DynamicTheme.of(context)
                   .setBrightness(value ? Brightness.dark : Brightness.light),
               title: Text('Sötét téma'),
+            ),
+            Spacer(),
+            Padding(
+              padding: EdgeInsets.all(12.0),
+              child: Text(
+                "Telex ${app.version}",
+                style: TextStyle(color: Colors.grey),
+              ),
             )
           ],
         ),

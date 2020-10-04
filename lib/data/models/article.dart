@@ -27,12 +27,15 @@ class Article {
     String slug = json['slug'];
     String title = json['title'];
     String image = json["imageSrc"];
-    String lead = json["lead"];
-    DateTime date =
-        DateTime.fromMillisecondsSinceEpoch(json['pubDate'] * 1000).toLocal();
+    String lead = json["lead"] != ""
+        ? json["lead"]
+        : json["recommender"] != null ? json["recommender"] : "";
+    DateTime date = json['pubDate'] != null
+        ? DateTime.fromMillisecondsSinceEpoch(json['pubDate'] * 1000).toLocal()
+        : null;
     Tag tag = Tag.fromJson(json['mainSuperTag']);
     List<Author> authors = [];
-    if (json['authors'] != "")
+    if (json['authors'] != "" && json['authors'] != null)
       json['authors'].forEach((a) => authors.add(Author.fromJson(a)));
 
     return Article(id, slug, title, image, lead, date, authors, tag);

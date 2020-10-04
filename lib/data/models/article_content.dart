@@ -1,3 +1,4 @@
+import 'package:telex/data/models/article.dart';
 import 'package:telex/data/models/author.dart';
 import "package:telex/data/models/tag.dart";
 
@@ -17,6 +18,7 @@ class ArticleContent {
   String boxLead;
   String boxTitle;
   DateTime updated;
+  List<Article> recommended;
 
   ArticleContent(
     this.id,
@@ -34,6 +36,7 @@ class ArticleContent {
     this.boxLead,
     this.boxTitle,
     this.updated,
+    this.recommended,
   );
 
   factory ArticleContent.fromJson(Map json) {
@@ -46,9 +49,27 @@ class ArticleContent {
     json['authors'].forEach((a) => authors.add(Author.fromJson(a)));
     Tag tag = Tag.fromJson(json['mainSuperTag']);
     String lead = json['lead'];
-    String content = json['content'].replaceAll(
-        "<p><strong>(</strong><a href=\"https://telex.hu/list/newest\" target=\"_blank\" rel=\"noopener noreferrer\"><strong>További friss híreinket ide kattintva olvashatják.</strong></a><strong>)</strong></p>",
-        "");
+    String content = json['content']
+        .replaceAll(
+            "<p><strong>(</strong><a href=\"https://telex.hu/list/newest\" "
+                "target=\"_blank\" rel=\"noopener noreferrer\">"
+                "<strong>További friss híreinket ide kattintva olvashatják.</strong>"
+                "</a><strong>)</strong></p>",
+            "")
+        .replaceAll("oembed url=\"https://www.youtube.com/watch?v=", "YTVID>")
+        .replaceAll("\"></oembed>", "</YTVID>");
+
+    content.split("<YTVID>").forEach((vid) {
+      String id = vid.split("</YTVID>").first;
+      content = content.replaceFirst(
+        "<YTVID>$id</YTVID>",
+        '<a href="https://youtu.be/$id">'
+            '<img src="https://i.ytimg.com/vi/$id/maxresdefault.jpg">'
+            '</a>'
+            '<figcaption>YouTube</figcaption>',
+      );
+    });
+
     List<Tag> tags = [];
     if (json['tags'] != "")
       json['tags'].forEach((t) => tags.add(Tag.fromJson(t)));
@@ -59,6 +80,9 @@ class ArticleContent {
     String boxTitle = json['boxTitle'];
     DateTime updated =
         DateTime.fromMillisecondsSinceEpoch(json['updatedAt'] * 1000).toLocal();
+    List<Article> recommended = [];
+    json['moreFromAuthors']
+        .forEach((a) => recommended.add(Article.fromJson(a)));
 
     return ArticleContent(
       id,
@@ -76,6 +100,7 @@ class ArticleContent {
       boxLead,
       boxTitle,
       updated,
+      recommended,
     );
   }
 }

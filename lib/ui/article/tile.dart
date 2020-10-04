@@ -65,8 +65,8 @@ class ArticleTile extends StatelessWidget {
                         ? Padding(
                             padding: EdgeInsets.only(right: 6.0),
                             child: ClipOval(
-                              child: Image.network(
-                                "https://telex.hu" + "/favicon.ico",
+                              child: Image.asset(
+                                'assets/profile.png',
                                 width: 20.0,
                               ),
                             ),
