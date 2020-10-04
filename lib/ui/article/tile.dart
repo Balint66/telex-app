@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:telex/data/models/article.dart';
 import 'package:telex/ext/timeago/messages/hu.dart';
+import 'package:telex/telex/image.dart';
 import 'package:telex/ui/article/view.dart';
 import 'package:telex/ui/dot.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -34,17 +35,7 @@ class ArticleTile extends StatelessWidget {
                           topLeft: Radius.circular(12.0),
                           topRight: Radius.circular(12.0),
                         ),
-                        child: Image.network(
-                          "https://telex.hu" + article.image,
-                          loadingBuilder: (context, widget, event) {
-                            return event == null
-                                ? widget
-                                : Padding(
-                                    padding: EdgeInsets.all(12.0),
-                                    child: LinearProgressIndicator(),
-                                  );
-                          },
-                        ),
+                        child: TelexImage(article.image),
                       )
                     : Container(),
                 ListTile(

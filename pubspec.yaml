@@ -1,6 +1,6 @@
 name: telex
 
-version: 0.1.0+1
+version: 0.1.4+5
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -24,7 +24,8 @@ dependencies:
   photo_view: ^0.10.2
   path: ^1.7.0
   crypto: ^2.1.5
-  tinycolor: ^1.0.3
+  toast: ^0.1.5
+  permission_handler: ^5.0.1
 
 dev_dependencies:
   flutter_test:

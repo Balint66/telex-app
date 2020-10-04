@@ -1,25 +1,29 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
+import 'package:flutter/material.dart';
 import 'package:telex/data/models/article.dart';
 import 'package:telex/data/models/article_content.dart';
 import 'package:http/http.dart' as http;
 import 'package:telex/data/context/app.dart';
 import 'package:telex/data/models/exchange.dart';
 import 'package:telex/data/models/weather.dart';
+import 'package:telex/telex/image.dart';
 
 class TelexApi {
-  static const TELEX_API = "https://telex.hu/api/";
+  static const TELEX_API = "https://telex.hu/api";
+  static const TELEX = "https://telex.hu";
 
-  String articleContent(String articleId) =>
-      TELEX_API + "articles/" + articleId;
-  String indexPageContent() => TELEX_API + "index/boxes";
+  String articleContent(String slug) => TELEX_API + "/articles/" + slug;
+  String indexPageContent() => TELEX_API + "/index/boxes";
   String articlesAll(int limit, {List<int> excludes}) =>
       TELEX_API +
-      "articles?limit=" +
+      "/articles?limit=" +
       limit.toString() +
       (excludes != null ? "&excludes=[${excludes.join(', ')}]" : "");
-  String exchangeRate() => TELEX_API + "exchangerate";
-  String weatherInfo() => TELEX_API + "weather/Budapest";
+  String exchangeRate() => TELEX_API + "/exchangerate";
+  String weatherInfo() => TELEX_API + "/weather/Budapest";
+  String imageUpload(String src) => TELEX + src;
   http.Client client;
   String userAgent;
 
@@ -28,10 +32,11 @@ class TelexApi {
     userAgent = "telex/" + app.version;
   }
 
-  Future<List<Article>> getArticles(
-      {List<Article> excluded = const <Article>[]}) async {
+  Future<List<Article>> getArticles({
+    List<Article> excluded = const <Article>[],
+  }) async {
     try {
-      List<int> excludes = excluded.map((e) => e.id).toList();
+      List<int> excludes = (excluded ?? <Article>[]).map((e) => e.id).toList();
 
       var response = await client.get(
         articlesAll(10, excludes: excludes.length == 0 ? null : excludes),
@@ -126,6 +131,22 @@ class TelexApi {
 
       Map json = jsonDecode(response.body);
       return ArticleContent.fromJson(json);
+    } catch (error) {
+      print("ERROR: TelexApi.getArticleContent: " + error.toString());
+      return null;
+    }
+  }
+
+  Future<Uint8List> image({String src}) async {
+    try {
+      var response = await client.get(
+        imageUpload(src),
+        headers: {"User-Agent": userAgent},
+      );
+
+      if (response.statusCode != 200) throw "Invalid response";
+
+      return response.bodyBytes;
     } catch (error) {
       print("ERROR: TelexApi.getArticleContent: " + error.toString());
       return null;

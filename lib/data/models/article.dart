@@ -32,7 +32,8 @@ class Article {
         DateTime.fromMillisecondsSinceEpoch(json['pubDate'] * 1000).toLocal();
     Tag tag = Tag.fromJson(json['mainSuperTag']);
     List<Author> authors = [];
-    json['authors'].forEach((a) => authors.add(Author.fromJson(a)));
+    if (json['authors'] != "")
+      json['authors'].forEach((a) => authors.add(Author.fromJson(a)));
 
     return Article(id, slug, title, image, lead, date, authors, tag);
   }

@@ -46,9 +46,12 @@ class ArticleContent {
     json['authors'].forEach((a) => authors.add(Author.fromJson(a)));
     Tag tag = Tag.fromJson(json['mainSuperTag']);
     String lead = json['lead'];
-    String content = json['content'];
+    String content = json['content'].replaceAll(
+        "<p><strong>(</strong><a href=\"https://telex.hu/list/newest\" target=\"_blank\" rel=\"noopener noreferrer\"><strong>További friss híreinket ide kattintva olvashatják.</strong></a><strong>)</strong></p>",
+        "");
     List<Tag> tags = [];
-    json['tags'].forEach((t) => tags.add(Tag.fromJson(t)));
+    if (json['tags'] != "")
+      json['tags'].forEach((t) => tags.add(Tag.fromJson(t)));
     String heroImage = json['heroImage'];
     String image = json['imageSrc'];
     String boxImage = json['boxImage'];

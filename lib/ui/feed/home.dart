@@ -23,10 +23,7 @@ class _HomeFeedState extends State<HomeFeed> {
       future: widget.feedBuilder.build(),
       builder: (BuildContext context, data) => Scaffold(
         body: NestedScrollView(
-          physics:
-              BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-          headerSliverBuilder:
-              (BuildContext context, _) => [
+          headerSliverBuilder: (BuildContext context, _) => [
             SliverAppBar(
               floating: true,
               pinned: false,
@@ -66,11 +63,9 @@ class _HomeFeedState extends State<HomeFeed> {
               await widget.feedBuilder.build();
               setState(() {});
             },
-
-            // Message Tiles
             child: CupertinoScrollbar(
               child: ListView(
-                physics: NeverScrollableScrollPhysics(),
+                physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
                 padding: EdgeInsets.only(top: 12.0),
                 children: data.hasData
                     ? widget.feedBuilder.tiles

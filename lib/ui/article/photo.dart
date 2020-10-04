@@ -2,6 +2,8 @@ import 'package:feather_icons_flutter/feather_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:share/share.dart';
+import 'package:telex/helpers/image_saver.dart';
+import 'package:toast/toast.dart';
 
 class Photo extends StatelessWidget {
   final String image;
@@ -17,7 +19,23 @@ class Photo extends StatelessWidget {
             icon: Icon(
               FeatherIcons.download,
             ),
-            onPressed: () {},
+            onPressed: () {
+              ImageSaver.save(image).then((file) {
+                if (file != null) {
+                  Toast.show(
+                    file + " mentve",
+                    context,
+                    backgroundColor: Colors.grey[900],
+                  );
+                } else {
+                  Toast.show(
+                    "Sikertelen letöltés",
+                    context,
+                    backgroundColor: Colors.red,
+                  );
+                }
+              });
+            },
           ),
           IconButton(
             icon: Icon(

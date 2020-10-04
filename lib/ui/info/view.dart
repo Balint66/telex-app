@@ -53,6 +53,7 @@ class InfoView extends StatelessWidget {
                 ),
                 Expanded(
                   child: TabBarView(
+                    physics: BouncingScrollPhysics(),
                     children: [
                       Container(
                         padding: EdgeInsets.only(top: 12.0),

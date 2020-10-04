@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:telex/utils/colors.dart';
-import 'package:tinycolor/tinycolor.dart';
 
 class ArticleTag extends StatelessWidget {
   final String text;
@@ -8,26 +6,11 @@ class ArticleTag extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color color = TinyColor(stringToColor(text))
-        .desaturate(20)
-        .brighten(5)
-        .lighten(25)
-        .spin(64)
-        .color;
-
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 4.0, horizontal: 3.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(99.0),
-        color: color,
-      ),
-      child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 6.0),
-        child: Text(text,
-            style: TextStyle(
-              color:
-                  color.computeLuminance() > 0.5 ? Colors.black : Colors.white,
-            )),
+      padding: EdgeInsets.only(bottom: 4.0, top: 4.0, right: 12.0),
+      child: Text(
+        text.toUpperCase(),
+        style: TextStyle(color: Color(0xFF00916B), letterSpacing: .8),
       ),
     );
   }
