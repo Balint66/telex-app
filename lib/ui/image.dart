@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:telex/data/context/app.dart';
 
 class TelexImage extends StatefulWidget {
+  TelexImage(this.src, {Key key, this.loadingBuilder}) : super(key: key);
+
   final String src;
   final Widget Function(BuildContext) loadingBuilder;
-
-  TelexImage(this.src, {Key key, this.loadingBuilder}) : super(key: key);
 
   @override
   _TelexImageState createState() => _TelexImageState();

@@ -5,10 +5,13 @@ import 'package:telex/ui/feed/tile.dart';
 import 'package:telex/ui/info/view.dart';
 import 'package:telex/utils/format.dart';
 
+
 class InfoTile extends Tile {
+  const InfoTile({Key key, this.weather, this.exchanges}) : super(key: key);
+  
   final WeatherInfo weather;
   final List<Exchange> exchanges;
-  const InfoTile({Key key, this.weather, this.exchanges}) : super(key: key);
+  final String type = "info";
 
   @override
   Widget build(BuildContext context) {

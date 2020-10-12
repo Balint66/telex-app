@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 class ArticleTag extends StatelessWidget {
-  final String text;
   const ArticleTag({Key key, this.text}) : super(key: key);
+  
+  final String text;
 
   @override
   Widget build(BuildContext context) {

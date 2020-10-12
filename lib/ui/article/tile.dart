@@ -8,8 +8,10 @@ import 'package:telex/ui/dot.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class ArticleTile extends Tile {
+  const ArticleTile({Key key, this.article, this.type}) : super(key: key);
+  
   final Article article;
-  const ArticleTile({Key key, this.article}) : super(key: key);
+  final String type;
 
   @override
   Widget build(BuildContext context) {

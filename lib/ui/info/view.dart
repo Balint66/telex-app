@@ -6,9 +6,10 @@ import 'package:feather_icons_flutter/feather_icons_flutter.dart';
 import 'package:telex/utils/format.dart';
 
 class InfoView extends StatelessWidget {
+  const InfoView({Key key, this.weather, this.exchanges}) : super(key: key);
+  
   final WeatherInfo weather;
   final List<Exchange> exchanges;
-  InfoView({Key key, this.weather, this.exchanges}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

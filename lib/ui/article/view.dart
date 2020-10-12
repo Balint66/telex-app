@@ -13,10 +13,11 @@ import 'package:telex/utils/format.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ArticleView extends StatelessWidget {
-  final String article;
-  final String fontFamily;
   const ArticleView({Key key, @required this.article, this.fontFamily})
       : super(key: key);
+      
+  final String article;
+  final String fontFamily;
 
   @override
   Widget build(BuildContext context) {

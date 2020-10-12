@@ -6,8 +6,9 @@ import 'package:telex/helpers/image_saver.dart';
 import 'package:toast/toast.dart';
 
 class Photo extends StatelessWidget {
-  final String image;
   const Photo({Key key, this.image}) : super(key: key);
+  
+  final String image;
 
   @override
   Widget build(BuildContext context) {
