@@ -7,7 +7,6 @@ import 'package:telex/utils/format.dart';
 import 'package:intl/intl.dart';
 
 class InfoView extends StatelessWidget {
-  final DateFormat _dateFormat = DateFormat('yyyy. MM. dd. HH:mm');
   final WeatherInfo weather;
   final List<Exchange> exchanges;
   InfoView({Key key, this.weather, this.exchanges}) : super(key: key);
@@ -149,7 +148,7 @@ class InfoView extends StatelessWidget {
                               padding: EdgeInsets.only(bottom: 12.0),
                               child: Text(
                                 "Frissítve: " +
-                                    _dateFormat.format(weather.created),
+                                    formatDate(weather.created),
                                 style: TextStyle(color: Colors.grey),
                               ),
                             ),
@@ -220,7 +219,7 @@ class InfoView extends StatelessWidget {
                               padding: EdgeInsets.only(bottom: 12.0),
                               child: Text(
                                 "Frissítve: " +
-                                    _dateFormat.format(exchanges[0].date),
+                                    formatDate(exchanges[0].date),
                                 style: TextStyle(color: Colors.grey),
                               ),
                             ),

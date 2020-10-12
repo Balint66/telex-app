@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:telex/data/models/article.dart';
 import 'package:telex/ext/timeago/messages/hu.dart';
-import 'package:telex/telex/image.dart';
+import 'package:telex/ui/image.dart';
 import 'package:telex/ui/article/view.dart';
 import 'package:telex/ui/dot.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -81,13 +81,15 @@ class ArticleTile extends StatelessWidget {
                             )
                           : Container(),
                     ),
-                    Text(timeago.format(article.date, locale: 'hu')),
-                    Separator(),
                     Text(
                       article.tag.name,
                       style: TextStyle(color: Color(0xFF00916B)),
                       softWrap: false,
                     ),
+                    article.date != null ? Separator() : Container(),
+                    article.date != null
+                        ? Text(timeago.format(article.date, locale: 'hu'))
+                        : Container(),
                   ]),
                 ),
               ],

@@ -48,14 +48,6 @@ class _SettingsPageState extends State<SettingsPage> {
                         child: Text('serif'),
                         value: 'serif',
                       ),
-                      DropdownMenuItem(
-                        child: Text('cursive'),
-                        value: 'cursive',
-                      ),
-                      DropdownMenuItem(
-                        child: Text('monospace'),
-                        value: 'monospace',
-                      ),
                     ],
                     onChanged: (value) async {
                       var prefs = await SharedPreferences.getInstance();
@@ -130,11 +122,9 @@ class SettingsPage1 extends StatelessWidget {
                       ),
                     ],
                     onChanged: (value) async {
-                      
                       var prefs = await SharedPreferences.getInstance();
                       await prefs.setString('fontFamily', value);
                       app.fontFamily = value;
-                      
                     })),
             Spacer(),
             Padding(

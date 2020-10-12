@@ -6,9 +6,10 @@ import 'package:flutter_html/style.dart';
 import 'package:share/share.dart';
 import 'package:telex/data/models/article_content.dart';
 import 'package:telex/data/context/app.dart';
-import 'package:telex/telex/image.dart';
+import 'package:telex/ui/image.dart';
 import 'package:telex/ui/article/photo.dart';
 import 'package:telex/ui/article/tag.dart';
+import 'package:telex/utils/format.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ArticleView extends StatelessWidget {
@@ -36,7 +37,11 @@ class ArticleView extends StatelessWidget {
           data.data.authors.forEach((author) {
             authors.add(ListTile(
               leading: ClipOval(
-                  child: Image.network("https://telex.hu" + author.avatar)),
+                child: Image.network(
+                  "https://telex.hu" + author.avatar,
+                  width: 42.0,
+                ),
+              ),
               title: Text(author.name),
             ));
           });
@@ -115,6 +120,23 @@ class ArticleView extends StatelessWidget {
                               ),
                             ),
                           ),
+                          data.data.date != null
+                              ? Padding(
+                                  padding: EdgeInsets.only(
+                                    bottom: 12.0,
+                                    right: 14.0,
+                                    top: 4.0,
+                                  ),
+                                  child: Text(
+                                    formatDate(data.data.date),
+                                    textAlign: TextAlign.right,
+                                    style: TextStyle(
+                                      fontFamily: "monospace",
+                                      fontSize: 16.0,
+                                    ),
+                                  ),
+                                )
+                              : null,
                           Padding(
                             padding: EdgeInsets.only(
                               left: 12.0,
@@ -147,18 +169,14 @@ class ArticleView extends StatelessWidget {
                                 "*": Style(fontFamily: app.fontFamily),
                                 "p": Style(
                                   fontSize: FontSize(16.0),
+                                  textAlign: TextAlign.justify,
                                 ),
                                 "figure": Style(margin: EdgeInsets.zero),
                                 "figcaption": Style(
                                   fontSize: FontSize(14.0),
                                   padding: EdgeInsets.all(8.0),
+                                  margin: EdgeInsets.only(top: 4.0),
                                   textAlign: TextAlign.center,
-                                  fontFamily: app.fontFamily,
-                                  backgroundColor:
-                                      Theme.of(context).brightness ==
-                                              Brightness.light
-                                          ? Colors.grey[300]
-                                          : Colors.grey[900],
                                 ),
                                 "a": Style(
                                   color: Color(0xFF00916B),
@@ -166,17 +184,16 @@ class ArticleView extends StatelessWidget {
                                 ),
                                 "blockquote": Style(
                                   margin: EdgeInsets.zero,
-                                  padding: EdgeInsets.only(left: 12.0),
+                                  padding:
+                                      EdgeInsets.only(left: 12.0, right: 6.0),
                                   border: Border(
                                     left: BorderSide(
                                       color: Color(0xFF00916B),
-                                      width: 4.0,
+                                      width: 6.0,
                                     ),
                                   ),
                                 ),
-                                "h1": Style(
-                                    fontSize: FontSize(22.0),
-                                    fontFamily: app.fontFamily),
+                                "h1": Style(fontSize: FontSize(22.0)),
                                 "li": Style(
                                   fontSize: FontSize(16.0),
                                   margin: EdgeInsets.only(bottom: 6.0),
@@ -218,7 +235,7 @@ class ArticleView extends StatelessWidget {
                                     bottom: 4.0,
                                   ),
                                   child: Text(
-                                    "Ajánló",
+                                    "Ajánlott",
                                     style: TextStyle(
                                       fontWeight: FontWeight.w600,
                                       fontSize: 24.0,

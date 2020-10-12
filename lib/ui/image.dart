@@ -15,23 +15,37 @@ class TelexImage extends StatefulWidget {
 }
 
 class _TelexImageState extends State<TelexImage> {
+  Uint8List imgData;
+  bool animate = true;
+
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: api.image(src: widget.src),
-      builder: (context, AsyncSnapshot<Uint8List> data) {
-        return data.hasData
+    if (imgData == null)
+      WidgetsBinding.instance
+          .addPostFrameCallback((_) => api.image(src: widget.src).then((data) {
+                imgData = data;
+                if (mounted) setState(() {});
+              }));
+
+    Widget img = imgData != null
+        ? animate
             ? FadeInImage(
                 placeholder: MemoryImage(placeholder),
-                image: MemoryImage(data.data),
+                image: MemoryImage(imgData),
                 fit: BoxFit.cover,
                 fadeInDuration: Duration(milliseconds: 300),
               )
-            : widget.loadingBuilder != null
-                ? widget.loadingBuilder(context)
-                : Container();
-      },
-    );
+            : Image.memory(
+                imgData,
+                fit: BoxFit.cover,
+              )
+        : widget.loadingBuilder != null
+            ? widget.loadingBuilder(context)
+            : Container();
+
+    if (imgData != null) animate = false;
+
+    return img;
   }
 
   final Uint8List placeholder = Uint8List.fromList(<int>[

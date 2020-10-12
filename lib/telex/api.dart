@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:telex/data/context/app.dart';
 import 'package:telex/data/models/exchange.dart';
 import 'package:telex/data/models/weather.dart';
-import 'package:telex/telex/image.dart';
+import 'package:telex/ui/image.dart';
 
 class TelexApi {
   static const TELEX_API = "https://telex.hu/api";
@@ -139,10 +139,13 @@ class TelexApi {
 
   Future<Uint8List> image({String src}) async {
     try {
+      print("IMG START");
       var response = await client.get(
         imageUpload(src),
         headers: {"User-Agent": userAgent},
       );
+
+      print("IMG END");
 
       if (response.statusCode != 200) throw "Invalid response";
 
