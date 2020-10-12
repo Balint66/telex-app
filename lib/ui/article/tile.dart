@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:telex/data/models/article.dart';
 import 'package:telex/ext/timeago/messages/hu.dart';
+import 'package:telex/ui/feed/tile.dart';
 import 'package:telex/ui/image.dart';
 import 'package:telex/ui/article/view.dart';
 import 'package:telex/ui/dot.dart';
 import 'package:timeago/timeago.dart' as timeago;
-import 'package:shared_preferences/shared_preferences.dart';
 
-class ArticleTile extends StatelessWidget {
+class ArticleTile extends Tile {
   final Article article;
   const ArticleTile({Key key, this.article}) : super(key: key);
 
@@ -19,7 +19,7 @@ class ArticleTile extends StatelessWidget {
       padding: EdgeInsets.all(12.0),
       child: Container(
         decoration: BoxDecoration(
-          boxShadow: [BoxShadow(color: Colors.black38, blurRadius: 12.0)],
+          boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 8.0)],
           color: Theme.of(context).scaffoldBackgroundColor,
           borderRadius: BorderRadius.circular(12.0),
         ),

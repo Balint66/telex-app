@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:telex/data/models/weather.dart';
 import 'package:telex/data/models/exchange.dart';
+import 'package:telex/ui/feed/tile.dart';
 import 'package:telex/ui/info/view.dart';
 import 'package:telex/utils/format.dart';
 
-class InfoTile extends StatelessWidget {
+class InfoTile extends Tile {
   final WeatherInfo weather;
   final List<Exchange> exchanges;
   const InfoTile({Key key, this.weather, this.exchanges}) : super(key: key);
@@ -16,7 +17,7 @@ class InfoTile extends StatelessWidget {
       decoration: BoxDecoration(
         color: Theme.of(context).scaffoldBackgroundColor,
         borderRadius: BorderRadius.circular(12.0),
-        boxShadow: [BoxShadow(color: Colors.black38, blurRadius: 12.0)],
+        boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 8.0)],
       ),
       child: Material(
         color: Colors.transparent,

@@ -72,6 +72,8 @@ class TelexApi {
       json['topBoxItems'].forEach((box) => boxes.add(Article.fromJson(box)));
       boxes.insert(0, boxes[2]);
       boxes.removeAt(3);
+      json['middle1BoxItems']
+          .forEach((box) => boxes.add(Article.fromJson(box)));
 
       return boxes;
     } catch (error) {
@@ -139,13 +141,10 @@ class TelexApi {
 
   Future<Uint8List> image({String src}) async {
     try {
-      print("IMG START");
       var response = await client.get(
         imageUpload(src),
         headers: {"User-Agent": userAgent},
       );
-
-      print("IMG END");
 
       if (response.statusCode != 200) throw "Invalid response";
 
