@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:telex/data/context/app.dart';
 import 'package:telex/data/models/article.dart';
 import 'package:telex/ui/article/tile.dart';

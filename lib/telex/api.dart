@@ -1,14 +1,12 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:flutter/material.dart';
 import 'package:telex/data/models/article.dart';
 import 'package:telex/data/models/article_content.dart';
 import 'package:http/http.dart' as http;
 import 'package:telex/data/context/app.dart';
 import 'package:telex/data/models/exchange.dart';
 import 'package:telex/data/models/weather.dart';
-import 'package:telex/ui/image.dart';
 
 class TelexApi {
   static const TELEX_API = "https://telex.hu/api";

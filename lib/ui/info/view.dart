@@ -4,7 +4,6 @@ import 'package:telex/data/models/exchange.dart';
 import 'package:telex/data/models/weather.dart';
 import 'package:feather_icons_flutter/feather_icons_flutter.dart';
 import 'package:telex/utils/format.dart';
-import 'package:intl/intl.dart';
 
 class InfoView extends StatelessWidget {
   final WeatherInfo weather;
