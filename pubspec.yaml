@@ -23,6 +23,7 @@ dependencies:
   path: ^1.7.0
   toast: ^0.1.5
   permission_handler: ^5.0.1
+  shared_preferences: '>=0.5.12 <2.0.0'
 
 dev_dependencies:
   flutter_test:
