@@ -25,6 +25,8 @@ dependencies:
   permission_handler: ^5.0.1
   shared_preferences: ">=0.5.12 <2.0.0"
   flutter_spinkit: ^4.1.2
+  # flutter_local_notifications: ^2.0.0
+  # workmanager: ^0.2.3
 
 dev_dependencies:
   flutter_test:
