@@ -1,8 +1,10 @@
 import 'package:feather_icons_flutter/feather_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:telex/ui/feed/builder.dart';
 import 'package:telex/ui/feed/tile.dart';
+import 'package:telex/ui/section.dart';
 import 'package:telex/ui/settings/page.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -17,8 +19,7 @@ class HomeFeed extends StatefulWidget {
 
 class _HomeFeedState extends State<HomeFeed> {
   final _refreshKey = GlobalKey<RefreshIndicatorState>();
-  final GlobalKey<AnimatedListState> animationKey =
-      GlobalKey<AnimatedListState>();
+  final animationKey = GlobalKey<AnimatedListState>();
 
   List<Tile> buffer = [];
 
@@ -32,13 +33,15 @@ class _HomeFeedState extends State<HomeFeed> {
               index < widget.feedBuilder.tiles.length;
               index++) {
             Tile tile = widget.feedBuilder.tiles[index];
-            if (tile.weather != null ||
+            if ((tile.weather != null && buffer.length == 0) ||
                 tile.article != null &&
                     (!buffer
                         .map((t) => t.article != null ? t.article.id : -1)
                         .contains(tile.article.id))) {
+              if (buffer.length > 0 &&
+                  tile.type != buffer.last.type &&
+                  buffer.last.type != "section") buffer.add(Section());
               buffer.add(tile);
-              print(buffer.length);
               animationKey.currentState.insertItem(buffer.length,
                   duration: const Duration(milliseconds: 1000));
             }
@@ -90,20 +93,25 @@ class _HomeFeedState extends State<HomeFeed> {
                 setState(() {});
               },
               child: CupertinoScrollbar(
-                child: AnimatedList(
-                  key: animationKey,
-                  physics: BouncingScrollPhysics(
-                      parent: AlwaysScrollableScrollPhysics()),
-                  padding: EdgeInsets.only(top: 12.0),
-                  initialItemCount: 1,
-                  itemBuilder: (BuildContext context, int index, animation) =>
-                      data.hasData
-                          ? articleItem(context, index, animation)
-                          : SizedBox(
-                              height: MediaQuery.of(context).size.height,
-                              child: Center(child: CircularProgressIndicator()),
-                            ),
-                ),
+                child: data.hasData
+                    ? AnimatedList(
+                        key: animationKey,
+                        physics: BouncingScrollPhysics(
+                            parent: AlwaysScrollableScrollPhysics()),
+                        padding: EdgeInsets.only(top: 12.0),
+                        initialItemCount: 1,
+                        itemBuilder:
+                            (BuildContext context, int index, animation) =>
+                                articleItem(context, index, animation))
+                    : SizedBox(
+                        height: MediaQuery.of(context).size.height,
+                        child: Center(
+                            child: SpinKitThreeBounce(
+                                color: Theme.of(context).brightness ==
+                                        Brightness.light
+                                    ? Colors.grey[300]
+                                    : Colors.grey[700])),
+                      ),
               ),
             ),
           ),

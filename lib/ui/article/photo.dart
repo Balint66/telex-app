@@ -56,7 +56,7 @@ class Photo extends StatelessWidget {
           maxScale: 8.0,
           loadingBuilder: (context, event) => Padding(
             padding: EdgeInsets.all(12.0),
-            child: LinearProgressIndicator(),
+            child: CircularProgressIndicator(),
           ),
         ),
       ),

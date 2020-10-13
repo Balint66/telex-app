@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_html/style.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:share/share.dart';
 import 'package:telex/data/models/article_content.dart';
 import 'package:telex/data/context/app.dart';
@@ -15,7 +16,7 @@ import 'package:url_launcher/url_launcher.dart';
 class ArticleView extends StatelessWidget {
   const ArticleView({Key key, @required this.article, this.fontFamily})
       : super(key: key);
-      
+
   final String article;
   final String fontFamily;
 
@@ -125,12 +126,11 @@ class ArticleView extends StatelessWidget {
                               ? Padding(
                                   padding: EdgeInsets.only(
                                     bottom: 12.0,
-                                    right: 14.0,
+                                    left: 14.0,
                                     top: 4.0,
                                   ),
                                   child: Text(
                                     formatDate(data.data.date),
-                                    textAlign: TextAlign.right,
                                     style: TextStyle(
                                       fontFamily: "monospace",
                                       fontSize: 16.0,
@@ -251,7 +251,12 @@ class ArticleView extends StatelessWidget {
                     )
                   : SizedBox(
                       height: MediaQuery.of(context).size.height,
-                      child: Center(child: CircularProgressIndicator()),
+                      child: Center(
+                          child: SpinKitThreeBounce(
+                              color: Theme.of(context).brightness ==
+                                      Brightness.light
+                                  ? Colors.grey[300]
+                                  : Colors.grey[700])),
                     ),
             ),
           ),
