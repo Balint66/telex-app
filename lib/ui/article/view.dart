@@ -253,6 +253,7 @@ class ArticleView extends StatelessWidget {
                       height: MediaQuery.of(context).size.height,
                       child: Center(
                           child: SpinKitThreeBounce(
+                              size: 42.0,
                               color: Theme.of(context).brightness ==
                                       Brightness.light
                                   ? Colors.grey[300]

@@ -4,10 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:telex/data/context/app.dart';
 
 class TelexImage extends StatefulWidget {
-  TelexImage(this.src, {Key key, this.loadingBuilder}) : super(key: key);
+  TelexImage(
+    this.src, {
+    Key key,
+    this.loadingBuilder,
+    this.width,
+    this.height,
+  }) : super(key: key);
 
   final String src;
   final Widget Function(BuildContext) loadingBuilder;
+  final double height;
+  final double width;
 
   @override
   _TelexImageState createState() => _TelexImageState();
@@ -32,10 +40,14 @@ class _TelexImageState extends State<TelexImage> {
                 placeholder: MemoryImage(placeholder),
                 image: MemoryImage(imgData),
                 fit: BoxFit.cover,
+                height: widget.height,
+                width: widget.width,
                 fadeInDuration: Duration(milliseconds: 300),
               )
             : Image.memory(
                 imgData,
+                height: widget.height,
+                width: widget.width,
                 fit: BoxFit.cover,
               )
         : widget.loadingBuilder != null

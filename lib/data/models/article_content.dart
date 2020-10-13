@@ -65,8 +65,8 @@ class ArticleContent {
         "<YTVID>$id</YTVID>",
         '<a href="https://youtu.be/$id">'
             '<img src="https://i.ytimg.com/vi/$id/maxresdefault.jpg">'
-            '</a>'
-            '<figcaption>YouTube</figcaption>',
+            '<figcaption>YouTube</figcaption>'
+            '</a>',
       );
     });
 

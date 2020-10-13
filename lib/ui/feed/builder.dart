@@ -15,10 +15,10 @@ class FeedBuilder {
     tiles.add(InfoTile(weather: weather, exchanges: exchanges));
 
     List<Article> boxes = [];
-    boxes.addAll(await api.getIndexPage());
+    boxes = await api.getIndexPage();
     boxes.forEach(
         (box) => tiles.add(ArticleTile(article: box, type: "mainpage")));
-    boxes.addAll(await api.getArticles(excluded: boxes));
+    boxes = await api.getArticles(excluded: boxes);
     boxes.forEach(
         (box) => tiles.add(ArticleTile(article: box, type: "article")));
 

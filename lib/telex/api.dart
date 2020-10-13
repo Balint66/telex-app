@@ -14,11 +14,13 @@ class TelexApi {
 
   String articleContent(String slug) => TELEX_API + "/articles/" + slug;
   String indexPageContent() => TELEX_API + "/index/boxes";
-  String articlesAll(int limit, {List<int> excludes}) =>
+  String articlesAll(int limit, {List<int> excludes, int perPage, int page}) =>
       TELEX_API +
       "/articles?limit=" +
       limit.toString() +
-      (excludes != null ? "&excludes=[${excludes.join(', ')}]" : "");
+      (excludes != null ? "&excludes=[${excludes.join(', ')}]" : "") +
+      (perPage != null ? "&perPage=$perPage" : "") +
+      (page != null ? "&page=$page" : "");
   String exchangeRate() => TELEX_API + "/exchangerate";
   String weatherInfo() => TELEX_API + "/weather/Budapest";
   String imageUpload(String src) => TELEX + src;
@@ -32,12 +34,18 @@ class TelexApi {
 
   Future<List<Article>> getArticles({
     List<Article> excluded = const <Article>[],
+    int page,
   }) async {
     try {
       List<int> excludes = (excluded ?? <Article>[]).map((e) => e.id).toList();
 
       var response = await client.get(
-        articlesAll(10, excludes: excludes.length == 0 ? null : excludes),
+        articlesAll(
+          10,
+          excludes: excludes.length == 0 ? null : excludes,
+          perPage: 10,
+          page: page,
+        ),
         headers: {"User-Agent": userAgent},
       );
 

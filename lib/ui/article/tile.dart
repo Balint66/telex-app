@@ -9,7 +9,7 @@ import 'package:timeago/timeago.dart' as timeago;
 
 class ArticleTile extends Tile {
   const ArticleTile({Key key, this.article, this.type}) : super(key: key);
-  
+
   final Article article;
   final String type;
 
@@ -38,7 +38,15 @@ class ArticleTile extends Tile {
                           topLeft: Radius.circular(12.0),
                           topRight: Radius.circular(12.0),
                         ),
-                        child: TelexImage(article.image),
+                        child: Row(children: [
+                          Expanded(
+                              child: TelexImage(
+                            article.image,
+                            height: 200.0,
+                            loadingBuilder: (context) =>
+                                Container(height: 200.0),
+                          ))
+                        ]),
                       )
                     : Container(),
                 ListTile(
