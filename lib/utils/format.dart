@@ -6,6 +6,6 @@ String capital(String text) => text != null && text.length > 1
 
 String formatDate(DateTime date) => date != null
     ? date.hour + date.minute != 0
-        ? DateFormat("y. m. d. H:m").format(date)
-        : DateFormat("y. m. d.").format(date)
+        ? DateFormat("y. M. d. H:mm").format(date)
+        : DateFormat("y. M. d.").format(date)
     : null;
