@@ -40,8 +40,15 @@ class _HomeFeedState extends State<HomeFeed> {
                         .contains(tile.article.id))) {
               if (buffer.length > 0 &&
                   tile.type != buffer.last.type &&
-                  buffer.last.type != "section") buffer.add(Section());
+                  buffer.last.type != "section") {
+                buffer.add(Section());
+
+                animationKey.currentState.insertItem(buffer.length,
+                    duration: const Duration(milliseconds: 1000));
+              }
+              
               buffer.add(tile);
+
               animationKey.currentState.insertItem(buffer.length,
                   duration: const Duration(milliseconds: 1000));
             }
