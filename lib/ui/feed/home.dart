@@ -151,13 +151,13 @@ class _HomeFeedState extends State<HomeFeed> {
           buffer.add(Section());
 
           animationKey.currentState.insertItem(buffer.length,
-              duration: const Duration(milliseconds: 1000));
+              duration: const Duration(milliseconds: 500));
         }
 
         buffer.add(tile);
 
         animationKey.currentState.insertItem(buffer.length,
-            duration: const Duration(milliseconds: 1000));
+            duration: const Duration(milliseconds: 500));
       }
     }
   }
@@ -168,7 +168,7 @@ class _HomeFeedState extends State<HomeFeed> {
 
     buffer.add(LoadingTile());
     animationKey.currentState.insertItem(buffer.length,
-        duration: const Duration(milliseconds: 1000));
+        duration: const Duration(milliseconds: 500));
 
     List<Article> boxes = [];
     boxes = await api.getArticles(page: page);
