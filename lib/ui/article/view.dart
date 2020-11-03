@@ -103,8 +103,7 @@ class ArticleView extends StatelessWidget {
             ],
             body: Container(
               child: data.hasData
-                  ? CupertinoScrollbar(
-                      child: ListView(
+                  ? ListView(
                         physics: BouncingScrollPhysics(),
                         children: [
                           Padding(
@@ -247,7 +246,6 @@ class ArticleView extends StatelessWidget {
                               : Container(),
                           Column(children: recommended),
                         ],
-                      ),
                     )
                   : SizedBox(
                       height: MediaQuery.of(context).size.height,

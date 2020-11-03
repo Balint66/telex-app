@@ -51,7 +51,7 @@ class TelexApi {
 
       if (response.statusCode != 200) throw "Invalid response";
 
-      List json = jsonDecode(response.body);
+      List json = jsonDecode(response.body)["items"];
       List<Article> articles = [];
 
       json.forEach((e) => articles.add(Article.fromJson(e)));

@@ -60,9 +60,11 @@ class ArticleContent {
         .replaceAll("\"></oembed>", "</YTVID>");
 
     content.split("<YTVID>").forEach((vid) {
-      String id = vid.split("</YTVID>").first;
+      String ctx = vid.split("</YTVID>").first;
+      String id = ctx.replaceFirst("&amp;feature=emb_title", "");
+      if (id.contains(';')) return;
       content = content.replaceFirst(
-        "<YTVID>$id</YTVID>",
+        "<YTVID>$ctx</YTVID>",
         '<a href="https://youtu.be/$id">'
             '<img src="https://i.ytimg.com/vi/$id/maxresdefault.jpg">'
             '<figcaption>YouTube</figcaption>'

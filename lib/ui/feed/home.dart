@@ -52,10 +52,12 @@ class _HomeFeedState extends State<HomeFeed> {
 
         return Scaffold(
           body: NestedScrollView(
+            physics: BouncingScrollPhysics(),
+            controller: _scrollController,
             headerSliverBuilder: (BuildContext context, _) => [
               SliverAppBar(
                 floating: true,
-                pinned: false,
+                pinned: true,
                 snap: false,
                 leading: Padding(
                   padding: EdgeInsets.all(10.0),
@@ -98,9 +100,8 @@ class _HomeFeedState extends State<HomeFeed> {
               child: data.hasData
                   ? AnimatedList(
                       key: animationKey,
-                      controller: _scrollController,
-                      physics: BouncingScrollPhysics(
-                          parent: AlwaysScrollableScrollPhysics()),
+                      physics: BouncingScrollPhysics(),
+                      shrinkWrap: true,
                       padding: EdgeInsets.only(top: 12.0),
                       initialItemCount: 1,
                       itemBuilder:
