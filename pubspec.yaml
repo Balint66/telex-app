@@ -1,6 +1,6 @@
 name: telex
-
-version: 0.1.7+8
+version: 0.1.8+9
+publish_to: none
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -25,6 +25,7 @@ dependencies:
   permission_handler: ^5.0.1
   shared_preferences: ">=0.5.12 <2.0.0"
   flutter_spinkit: ^4.1.2
+  flutter_custom_tabs: ^0.6.0 
   # flutter_local_notifications: ^2.0.0
   # workmanager: ^0.2.3
 
@@ -38,3 +39,36 @@ flutter:
   assets:
     - assets/logo.png
     - assets/profile.png
+
+  fonts:
+    - family: roboto
+      fonts:
+        - asset: assets/fonts/Roboto-Italic.ttf
+          style: italic
+          weight: 400
+        - asset: assets/fonts/Roboto-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Roboto-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Roboto-ThinItalic.ttf
+          weight: 100
+          style: italic
+        - asset: assets/fonts/Roboto-BlackItalic.ttf
+          weight: 900
+          style: italic
+        - asset: assets/fonts/Roboto-MediumItalic.ttf
+          weight: 500
+          style: italic
+        - asset: assets/fonts/Roboto-Black.ttf
+          weight: 900
+        - asset: assets/fonts/Roboto-BoldItalic.ttf
+          weight: 700
+          style: italic
+        - asset: assets/fonts/Roboto-Thin.ttf
+          weight: 100
+        - asset: assets/fonts/Roboto-LightItalic.ttf
+          weight: 300
+        - asset: assets/fonts/Roboto-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Roboto-Bold.ttf
+          weight: 700

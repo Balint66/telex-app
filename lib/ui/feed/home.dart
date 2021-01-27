@@ -37,7 +37,7 @@ class _HomeFeedState extends State<HomeFeed> {
     _scrollController
       ..addListener(() {
         if (_scrollController.position.pixels >
-            _scrollController.position.maxScrollExtent - 100) {
+            _scrollController.position.maxScrollExtent - 200) {
           loadMore();
         }
       });
@@ -53,7 +53,6 @@ class _HomeFeedState extends State<HomeFeed> {
         return Scaffold(
           body: NestedScrollView(
             physics: BouncingScrollPhysics(),
-            controller: _scrollController,
             headerSliverBuilder: (BuildContext context, _) => [
               SliverAppBar(
                 floating: true,
@@ -100,6 +99,7 @@ class _HomeFeedState extends State<HomeFeed> {
               child: data.hasData
                   ? AnimatedList(
                       key: animationKey,
+                      controller: _scrollController,
                       physics: BouncingScrollPhysics(),
                       shrinkWrap: true,
                       padding: EdgeInsets.only(top: 12.0),
@@ -168,8 +168,8 @@ class _HomeFeedState extends State<HomeFeed> {
     loading = true;
 
     buffer.add(LoadingTile());
-    animationKey.currentState.insertItem(buffer.length,
-        duration: const Duration(milliseconds: 500));
+    animationKey.currentState
+        .insertItem(buffer.length, duration: const Duration(milliseconds: 500));
 
     List<Article> boxes = [];
     boxes = await api.getArticles(page: page);

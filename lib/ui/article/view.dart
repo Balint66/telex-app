@@ -11,7 +11,7 @@ import 'package:telex/ui/image.dart';
 import 'package:telex/ui/article/photo.dart';
 import 'package:telex/ui/article/tag.dart';
 import 'package:telex/utils/format.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 
 class ArticleView extends StatelessWidget {
   const ArticleView({Key key, @required this.article, this.fontFamily})
@@ -21,11 +21,16 @@ class ArticleView extends StatelessWidget {
   final String fontFamily;
 
   void handleLink(String url) {
-    if (url.startsWith("/")) {
-      launch("https://telex.hu$url");
-    } else {
-      launch(url);
-    }
+    if (url.startsWith("/")) url = "https://telex.hu$url";
+
+    launch(url, option: CustomTabsOption(
+      animation: CustomTabsAnimation.slideIn(),
+      enableInstantApps: false,
+      toolbarColor: Color(0xFF022A53),
+      enableUrlBarHiding: true,
+      enableDefaultShare: true,
+      showPageTitle: true,
+    ));
   }
 
   @override
@@ -40,7 +45,7 @@ class ArticleView extends StatelessWidget {
         if (data.hasData) {
           data.data.tags.forEach((tag) {
             tags.add(ArticleTag(
-              text: tag.name,
+              text: "#" + tag.name,
             ));
           });
 
@@ -120,7 +125,7 @@ class ArticleView extends StatelessWidget {
                             right: 14.0,
                             bottom: 8.0,
                           ),
-                          child: Text(
+                          child: SelectableText(
                             data.data.title,
                             style: TextStyle(
                               fontSize: 24.0,
@@ -138,7 +143,8 @@ class ArticleView extends StatelessWidget {
                                 ),
                                 child: Row(
                                   children: [
-                                    Icon(FeatherIcons.clock, size: 14.0),
+                                    Icon(FeatherIcons.clock,
+                                        size: 14.0, color: Color(0xFF00916B)),
                                     SizedBox(width: 8.0),
                                     Text(
                                       formatDate(data.data.date),
@@ -151,6 +157,7 @@ class ArticleView extends StatelessWidget {
                                 ),
                               )
                             : null,
+                        // Tags
                         Padding(
                           padding: EdgeInsets.only(
                             left: 12.0,
@@ -159,19 +166,23 @@ class ArticleView extends StatelessWidget {
                           ),
                           child: Wrap(children: tags),
                         ),
+
+                        // Lead
                         data.data.lead != null && data.data.lead != ""
                             ? Padding(
                                 padding: EdgeInsets.symmetric(
                                   horizontal: 14.0,
                                   vertical: 16.0,
                                 ),
-                                child: Text(data.data.lead,
+                                child: SelectableText(data.data.lead,
                                     style: TextStyle(
                                         fontWeight: FontWeight.w600,
                                         fontSize: 17.0,
                                         fontFamily: app.fontFamily)),
                               )
                             : Container(),
+
+                        // Content
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 4.0),
                           child: Html(
@@ -196,6 +207,7 @@ class ArticleView extends StatelessWidget {
                                 "a": Style(
                                   color: Color(0xFF00916B),
                                   textDecoration: TextDecoration.none,
+                                  fontWeight: FontWeight.normal,
                                 ),
                                 "blockquote": Style(
                                   margin: EdgeInsets.zero,

@@ -43,6 +43,10 @@ class _SettingsPageState extends State<SettingsPage> {
                     value: app.fontFamily,
                     items: [
                       DropdownMenuItem(
+                        child: Text('Roboto'),
+                        value: 'roboto',
+                      ),
+                      DropdownMenuItem(
                         child: Text('sans-serif'),
                         value: 'sans-serif',
                       ),

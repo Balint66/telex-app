@@ -14,7 +14,7 @@ void main() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var fontFamily = prefs.getString('fontFamily');
     if (fontFamily == null || fontFamily.isEmpty) {
-      await prefs.setString('fontFamily', 'sans-serif');
+      await prefs.setString('fontFamily', 'roboto');
     }
     app.fontFamily = prefs.get('fontFamily');
   }
