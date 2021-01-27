@@ -22,7 +22,7 @@ class ArticleTile extends Tile {
       child: Container(
         decoration: BoxDecoration(
           boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 8.0)],
-          color: Theme.of(context).scaffoldBackgroundColor,
+          color: Color(0x12FFFFFF),
           borderRadius: BorderRadius.circular(12.0),
         ),
         child: Material(

@@ -8,7 +8,7 @@ class Exchange {
 
   factory Exchange.fromJson(Map json) {
     String currency = json['currency'];
-    double rate = json['rate'];
+    double rate = double.parse(json['rate']);
     bool up = json['updown'] == 'UP';
     DateTime date = DateTime.parse(json['date']['date']).toLocal();
     return Exchange(currency, rate, up, date);

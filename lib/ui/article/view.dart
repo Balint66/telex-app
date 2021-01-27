@@ -20,6 +20,14 @@ class ArticleView extends StatelessWidget {
   final String article;
   final String fontFamily;
 
+  void handleLink(String url) {
+    if (url.startsWith("/")) {
+      launch("https://telex.hu$url");
+    } else {
+      launch(url);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -104,72 +112,79 @@ class ArticleView extends StatelessWidget {
             body: Container(
               child: data.hasData
                   ? ListView(
-                        physics: BouncingScrollPhysics(),
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(
-                              left: 14.0,
-                              right: 14.0,
-                              bottom: 8.0,
-                            ),
-                            child: Text(
-                              data.data.title,
-                              style: TextStyle(
-                                fontSize: 24.0,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: app.fontFamily,
-                              ),
+                      physics: BouncingScrollPhysics(),
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(
+                            left: 14.0,
+                            right: 14.0,
+                            bottom: 8.0,
+                          ),
+                          child: Text(
+                            data.data.title,
+                            style: TextStyle(
+                              fontSize: 24.0,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: app.fontFamily,
                             ),
                           ),
-                          data.data.date != null
-                              ? Padding(
-                                  padding: EdgeInsets.only(
-                                    bottom: 12.0,
-                                    left: 14.0,
-                                    top: 4.0,
-                                  ),
-                                  child: Text(
-                                    formatDate(data.data.date),
-                                    style: TextStyle(
-                                      fontFamily: "monospace",
-                                      fontSize: 16.0,
-                                    ),
-                                  ),
-                                )
-                              : null,
-                          Padding(
-                            padding: EdgeInsets.only(
-                              left: 12.0,
-                              right: 12.0,
-                              bottom: 12.0,
-                            ),
-                            child: Wrap(children: tags),
-                          ),
-                          data.data.lead != null && data.data.lead != ""
-                              ? Padding(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: 14.0,
-                                    vertical: 16.0,
-                                  ),
-                                  child: Text(data.data.lead,
+                        ),
+                        data.data.date != null
+                            ? Padding(
+                                padding: EdgeInsets.only(
+                                  bottom: 12.0,
+                                  left: 14.0,
+                                  top: 4.0,
+                                ),
+                                child: Row(
+                                  children: [
+                                    Icon(FeatherIcons.clock, size: 14.0),
+                                    SizedBox(width: 8.0),
+                                    Text(
+                                      formatDate(data.data.date),
                                       style: TextStyle(
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 17.0,
-                                          fontFamily: app.fontFamily)),
-                                )
-                              : Container(),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 4.0),
-                            child: Html(
+                                        fontFamily: "monospace",
+                                        fontSize: 16.0,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            : null,
+                        Padding(
+                          padding: EdgeInsets.only(
+                            left: 12.0,
+                            right: 12.0,
+                            bottom: 12.0,
+                          ),
+                          child: Wrap(children: tags),
+                        ),
+                        data.data.lead != null && data.data.lead != ""
+                            ? Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 14.0,
+                                  vertical: 16.0,
+                                ),
+                                child: Text(data.data.lead,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 17.0,
+                                        fontFamily: app.fontFamily)),
+                              )
+                            : Container(),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 4.0),
+                          child: Html(
                               onImageTap: (img) => Navigator.of(context).push(
-                                MaterialPageRoute(
-                                    builder: (context) => Photo(image: img)),
-                              ),
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            Photo(image: img)),
+                                  ),
                               style: {
                                 "*": Style(fontFamily: app.fontFamily),
                                 "p": Style(
                                   fontSize: FontSize(16.0),
-                                  textAlign: TextAlign.justify,
+                                  textAlign: TextAlign.left,
                                 ),
                                 "figure": Style(margin: EdgeInsets.zero),
                                 "figcaption": Style(
@@ -192,6 +207,7 @@ class ArticleView extends StatelessWidget {
                                       width: 6.0,
                                     ),
                                   ),
+                                  fontStyle: FontStyle.italic,
                                 ),
                                 "h1": Style(fontSize: FontSize(22.0)),
                                 "li": Style(
@@ -201,51 +217,50 @@ class ArticleView extends StatelessWidget {
                               },
                               data: data.data.content.replaceAll(
                                   "/uploads/", "https://telex.hu/uploads/"),
-                              onLinkTap: (url) => launch(url),
-                            ),
-                          ),
+                              onLinkTap: (url) => handleLink(url)),
+                        ),
 
-                          // Authors
-                          data.data.authors.length > 0
-                              ? Padding(
-                                  padding: EdgeInsets.only(
-                                    left: 14.0,
-                                    right: 14.0,
-                                    top: 16.0,
+                        // Authors
+                        data.data.authors.length > 0
+                            ? Padding(
+                                padding: EdgeInsets.only(
+                                  left: 14.0,
+                                  right: 14.0,
+                                  top: 16.0,
+                                ),
+                                child: Text(
+                                  "Szerkesztők",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 24.0,
+                                    fontFamily: app.fontFamily,
                                   ),
-                                  child: Text(
-                                    "Szerkesztők",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 24.0,
-                                      fontFamily: app.fontFamily,
-                                    ),
-                                  ),
-                                )
-                              : Container(),
-                          Column(children: authors),
+                                ),
+                              )
+                            : Container(),
+                        Column(children: authors),
 
-                          // Recommended
-                          data.data.recommended.length > 0
-                              ? Padding(
-                                  padding: EdgeInsets.only(
-                                    left: 14.0,
-                                    right: 14.0,
-                                    top: 16.0,
-                                    bottom: 4.0,
+                        // Recommended
+                        data.data.recommended.length > 0
+                            ? Padding(
+                                padding: EdgeInsets.only(
+                                  left: 14.0,
+                                  right: 14.0,
+                                  top: 16.0,
+                                  bottom: 4.0,
+                                ),
+                                child: Text(
+                                  "Ajánlott",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 24.0,
+                                    fontFamily: app.fontFamily,
                                   ),
-                                  child: Text(
-                                    "Ajánlott",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 24.0,
-                                      fontFamily: app.fontFamily,
-                                    ),
-                                  ),
-                                )
-                              : Container(),
-                          Column(children: recommended),
-                        ],
+                                ),
+                              )
+                            : Container(),
+                        Column(children: recommended),
+                      ],
                     )
                   : SizedBox(
                       height: MediaQuery.of(context).size.height,

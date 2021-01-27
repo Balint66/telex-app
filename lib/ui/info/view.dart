@@ -7,7 +7,7 @@ import 'package:telex/utils/format.dart';
 
 class InfoView extends StatelessWidget {
   const InfoView({Key key, this.weather, this.exchanges}) : super(key: key);
-  
+
   final WeatherInfo weather;
   final List<Exchange> exchanges;
 
@@ -105,15 +105,16 @@ class InfoView extends StatelessWidget {
                                       Text(weather.humidity.toString() + "%"),
                                     ],
                                   ),
-                                  Column(
-                                    children: [
-                                      Icon(FeatherIcons.eye),
-                                      SizedBox(height: 2.0),
-                                      Text((weather.visibility / 1000)
-                                              .toString() +
-                                          " km"),
-                                    ],
-                                  ),
+                                  if (weather.visibility != null)
+                                    Column(
+                                      children: [
+                                        Icon(FeatherIcons.eye),
+                                        SizedBox(height: 2.0),
+                                        Text((weather.visibility / 1000)
+                                                .toString() +
+                                            " km"),
+                                      ],
+                                    ),
                                   Column(
                                     children: [
                                       Icon(FeatherIcons.wind),
@@ -147,8 +148,7 @@ class InfoView extends StatelessWidget {
                             Padding(
                               padding: EdgeInsets.only(bottom: 12.0),
                               child: Text(
-                                "Frissítve: " +
-                                    formatDate(weather.created),
+                                "Frissítve: " + formatDate(weather.created),
                                 style: TextStyle(color: Colors.grey),
                               ),
                             ),
@@ -218,8 +218,7 @@ class InfoView extends StatelessWidget {
                             Padding(
                               padding: EdgeInsets.only(bottom: 12.0),
                               child: Text(
-                                "Frissítve: " +
-                                    formatDate(exchanges[0].date),
+                                "Frissítve: " + formatDate(exchanges[0].date),
                                 style: TextStyle(color: Colors.grey),
                               ),
                             ),

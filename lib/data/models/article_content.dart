@@ -46,7 +46,8 @@ class ArticleContent {
     DateTime date =
         DateTime.fromMillisecondsSinceEpoch(json['pubDate'] * 1000).toLocal();
     List<Author> authors = [];
-    json['authors'].forEach((a) => authors.add(Author.fromJson(a)));
+    if (json['authors'] != null)
+      json['authors'].forEach((a) => authors.add(Author.fromJson(a)));
     Tag tag = Tag.fromJson(json['mainSuperTag']);
     String lead = json['lead'];
     String content = json['content']
@@ -83,8 +84,9 @@ class ArticleContent {
     DateTime updated =
         DateTime.fromMillisecondsSinceEpoch(json['updatedAt'] * 1000).toLocal();
     List<Article> recommended = [];
-    json['moreFromAuthors']
-        .forEach((a) => recommended.add(Article.fromJson(a)));
+    if (json['moreFromAuthors'] != null)
+      json['moreFromAuthors']
+          .forEach((a) => recommended.add(Article.fromJson(a)));
 
     return ArticleContent(
       id,
