@@ -26,6 +26,7 @@ class TelexApi {
   Uri weatherInfo() => Uri.parse(TELEX_API + "/weather/Budapest");
   Uri imageUpload(String src) => Uri.parse(TELEX + src);
   Uri search(String term) => Uri.parse(TELEX_API + "/search?term=" + term);
+  Uri tag(List<String> slugs) => Uri.parse(TELEX_API + '/search?filters={"superTagSlugs":['+ slugs.join(', ') + "]}");
   http.Client client;
   String userAgent;
 
@@ -167,6 +168,27 @@ class TelexApi {
     try{
       var response = await client.get(
         search(term),
+        headers: {"User-Agent": userAgent}
+      );
+
+      if (response.statusCode != 200) throw "Invalid response";
+
+      Map json = jsonDecode(response.body);
+
+      return SearchResponse.fromJson(json);
+
+    }
+    catch(error)
+    {
+      print("ERROR: TelexApi.search: " + error.toString());
+      return null;
+    }
+  }
+
+  Future<SearchResponse> getArticlesInTag({String tagSlug}) async {
+    try{
+      var response = await client.get(
+        tag([tagSlug]),
         headers: {"User-Agent": userAgent}
       );
 
