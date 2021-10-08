@@ -8,6 +8,7 @@ import 'package:telex/ui/article/tile.dart';
 import 'package:telex/ui/feed/builder.dart';
 import 'package:telex/ui/feed/loading.dart';
 import 'package:telex/ui/feed/tile.dart';
+import 'package:telex/ui/search/searchPage.dart';
 import 'package:telex/ui/section.dart';
 import 'package:telex/ui/settings/page.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -78,6 +79,14 @@ class _HomeFeedState extends State<HomeFeed> {
                   height: 24.0,
                 ),
                 actions: [
+                  IconButton(
+                    icon: Icon(FeatherIcons.search),
+                    onPressed: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => SearchPage()
+                      )
+                    ),
+                  ),
                   IconButton(
                     icon: Icon(FeatherIcons.settings),
                     onPressed: () => Navigator.of(context).push(

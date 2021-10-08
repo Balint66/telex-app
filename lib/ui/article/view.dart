@@ -23,8 +23,8 @@ class ArticleView extends StatelessWidget {
   void handleLink(String url) {
     if (url.startsWith("/")) url = "https://telex.hu$url";
 
-    launch(url, option: CustomTabsOption(
-      animation: CustomTabsAnimation.slideIn(),
+    launch(url, customTabsOption: CustomTabsOption(
+      animation: CustomTabsSystemAnimation.slideIn(),
       enableInstantApps: false,
       toolbarColor: Color(0xFF022A53),
       enableUrlBarHiding: true,
@@ -186,7 +186,7 @@ class ArticleView extends StatelessWidget {
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 4.0),
                           child: Html(
-                              onImageTap: (img) => Navigator.of(context).push(
+                              onImageTap: (img, ctx, a, b) => Navigator.of(context).push(
                                     MaterialPageRoute(
                                         builder: (context) =>
                                             Photo(image: img)),
@@ -229,7 +229,7 @@ class ArticleView extends StatelessWidget {
                               },
                               data: data.data.content.replaceAll(
                                   "/uploads/", "https://telex.hu/uploads/"),
-                              onLinkTap: (url) => handleLink(url)),
+                              onLinkTap: (url, ctx, a, b) => handleLink(url)),
                         ),
 
                         // Authors

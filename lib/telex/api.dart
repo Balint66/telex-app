@@ -6,24 +6,26 @@ import 'package:telex/data/models/article_content.dart';
 import 'package:http/http.dart' as http;
 import 'package:telex/data/context/app.dart';
 import 'package:telex/data/models/exchange.dart';
+import 'package:telex/data/models/search_response.dart';
 import 'package:telex/data/models/weather.dart';
 
 class TelexApi {
   static const TELEX_API = "https://telex.hu/api";
   static const TELEX = "https://telex.hu";
 
-  String articleContent(String slug) => TELEX_API + "/articles/" + slug;
-  String indexPageContent() => TELEX_API + "/index/boxes";
-  String articlesAll(int limit, {List<int> excludes, int perPage, int page}) =>
-      TELEX_API +
+  Uri articleContent(String slug) => Uri.parse(TELEX_API + "/articles/" + slug);
+  Uri indexPageContent() => Uri.parse(TELEX_API + "/index/boxes");
+  Uri articlesAll(int limit, {List<int> excludes, int perPage, int page}) =>
+      Uri.parse(TELEX_API +
       "/articles?limit=" +
       limit.toString() +
       (excludes != null ? "&excludes=[${excludes.join(', ')}]" : "") +
       (perPage != null ? "&perPage=$perPage" : "") +
-      (page != null ? "&page=$page" : "");
-  String exchangeRate() => TELEX_API + "/exchangerate";
-  String weatherInfo() => TELEX_API + "/weather/Budapest";
-  String imageUpload(String src) => TELEX + src;
+      (page != null ? "&page=$page" : ""));
+  Uri exchangeRate() => Uri.parse(TELEX_API + "/exchangerate");
+  Uri weatherInfo() => Uri.parse(TELEX_API + "/weather/Budapest");
+  Uri imageUpload(String src) => Uri.parse(TELEX + src);
+  Uri search(String term) => Uri.parse(TELEX_API + "/search?term=" + term);
   http.Client client;
   String userAgent;
 
@@ -160,4 +162,26 @@ class TelexApi {
       return null;
     }
   }
+
+  Future<SearchResponse> getSearchResult({String term}) async {
+    try{
+      var response = await client.get(
+        search(term),
+        headers: {"User-Agent": userAgent}
+      );
+
+      if (response.statusCode != 200) throw "Invalid response";
+
+      Map json = jsonDecode(response.body);
+
+      return SearchResponse.fromJson(json);
+
+    }
+    catch(error)
+    {
+      print("ERROR: TelexApi.search: " + error.toString());
+      return null;
+    }
+  }
+
 }
